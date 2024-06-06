@@ -284,7 +284,12 @@ export default function () {
 
             // if height is not set: set height on first update, after nodes were filtered by minFrameSize
             if (!h || resetHeightOnZoom) {
-                const maxDepth = Math.max.apply(null, descendants.map(function (n) { return n.depth }))
+                let maxDepth = 0;
+                for (let i = 0; i < descendants.length; ++i) {
+                    if (descendants[i].depth > maxDepth) {
+                        maxDepth = descendants[i].depth;
+                    }
+                }
 
                 h = (maxDepth + 3) * c
                 if (h < minHeight) h = minHeight
